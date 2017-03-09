@@ -5,12 +5,29 @@ namespace DAL {
 
     class PersonGateway extends DBconnection
     {
+        public function IsPersonExist($email)
+        {
+            $db = $this->Open();
+            $query = "SELECT COUNT(*) FROM Person WHERE Email = ?";
+            $stmt = $db->prepare($query);
+            $stmt->bind_param("s",$email);
+            $countRow = $stmt->execute();
+            $stmt->close();
+            $this->Close();
+            return $countRow;
+        }
+
         public function AddPerson(Person $person)
         {
             $query = "INSERT INTO Person(Name, PhoneNo, Email, Address)VALUES(?,?,?,?)";
             $db = $this->Open();
             $stmt = $db->prepare($query);
-            $stmt->bind_param("ssss", $person->getName(), $person->getPhoneNo(), $person->getEmail(), $person->getAddress());
+            $stmt->bind_param("ssss",
+                $person->getName(),
+                $person->getPhoneNo(),
+                $person->getEmail(),
+                $person->getAddress()
+            );
             return $stmt->execute();
         }
 
@@ -34,7 +51,9 @@ namespace DAL {
                 }
                 $result->free();
             }
+            $this->Close();
             return $persons;
         }
+
     }
 }

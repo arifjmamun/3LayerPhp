@@ -9,6 +9,29 @@ namespace Models
         private $PhoneNo;
         private $Email;
         private $Address;
+
+//        public function __set($property, $value)
+//        {
+//            if(property_exists('Person', $property))
+//            {
+//                $this->$property = $value;
+//            }
+//            else
+//            {
+//                echo "The {$property} property doesn't exist";
+//            }
+//        }
+//        public function __get($property)
+//        {
+//            if(property_exists('Person', $property))
+//            {
+//                return $this->$property;
+//            }
+//            else
+//            {
+//                echo "The {$property} property doesn't exist";
+//            }
+//        }
         /**
          * @return mixed
          */

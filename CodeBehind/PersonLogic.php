@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-spl_autoload_register(function($name){
-    require_once '../'.str_replace('\\','/',$name).'.php';
-});
+require_once 'autoloader.php';
 
 use BLL\PersonManager;
 use Models\Person;
+
+$_manager = new PersonManager();
 
 if($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submitBtn']))
 {
@@ -16,9 +16,8 @@ if($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['submitBtn']))
     $aPerson->setEmail($_POST['email']);
     $aPerson->setAddress($_POST['address']);
 
-    $_manager = new PersonManager();
-    $affectedRows = $_manager->AddPerson($aPerson);
+    $msg = $_manager->AddPerson($aPerson);
 
-    $_SESSION['status'] = $affectedRows>0 ? 'Data Saved' : 'Data Not Saved';
+    $_SESSION['status'] = $msg;
     header('Location: ../index.php');
 }

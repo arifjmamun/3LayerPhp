@@ -6,22 +6,22 @@ namespace DAL {
 
     abstract  class DBconnection
     {
-        private $HostName;
-        private $UserName;
-        private $Password;
-        private $DBName;
+        private static $HostName;
+        private static $UserName;
+        private static $Password;
+        private static $DBName;
 
         public function __construct()
         {
-            $this->HostName = 'localhost';
-            $this->UserName = 'root';
-            $this->Password = '';
-            $this->DBName = 'Info_Db';
+            DBconnection::$HostName = 'localhost';
+            DBconnection::$UserName = 'root';
+            DBconnection::$Password = '';
+            DBconnection::$DBName = 'Info_Db';
         }
 
         public function Open()
         {
-            $connection = new mysqli($this->HostName, $this->UserName, $this->Password, $this->DBName);
+            $connection = new mysqli(DBconnection::$HostName, DBconnection::$UserName, DBconnection::$Password, DBconnection::$DBName);
             if ( $connection->connect_error) {
                 die('Database connection failed');
             }
